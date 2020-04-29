@@ -1,0 +1,37 @@
+{
+  "languages": [
+    {
+      "id": 62,
+      "name": "Java"
+    },
+    {
+      "id": 63,
+      "name": "JavaScript"
+    }
+  ],
+  "challenges": [
+    {
+      "id": 1,
+      "task": "do this",
+      "example": "example",
+      "defaultInput": 4,
+      "initialCode": [
+        {
+          "java": "public static int FirstFactorial(int num)",
+          "javascript": "function FirstFactorial(num)"
+        }
+      ],
+      "solutionCode": [
+        {
+          "java": "src/java/Factorial.java",
+          "javascript": ""
+        }
+      ],
+      "testInputs": [
+        3,
+        9,
+        18
+      ]
+    }
+  ]
+}
