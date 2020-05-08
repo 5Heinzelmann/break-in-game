@@ -1,21 +1,33 @@
 <template>
   <div id="app">
-    <label for="lang"></label>
-    <select id="lang" style="font-size: x-large" v-model="languageId">
-      <option :value="63">Java Script</option>
-      <option :value="62">Java</option>
-    </select>
-    <button @click="loadExample()" style="font-size: x-large">Load example</button>
-    <label>
-      <textarea class="input" cols="1" rows="1" v-model="input"/>
-    </label>
-    <div @click="executeCode()" class="btn"><h1>{{buttonLabel}}</h1></div>
-    <div class="output">{{output}}</div>
+    <div class="column">
+      <div class="col">
+        <label for="lang"></label>
+        <select id="lang" style="font-size: x-large" v-model="languageId">
+          <option :value="63">Java Script</option>
+          <option :value="62">Java</option>
+        </select>
+      </div>
+      <div class="col">
+        <div class="task">{{task}}</div>
+      </div>
+      <div class="col">
+        <button @click="loadExample()" style="font-size: x-large">Load example</button>
+        <label>
+          <textarea class="input" cols="1" rows="1" v-model="input"/>
+        </label>
+      </div>
+      <div class="col">
+        <div @click="executeCode()" class="btn"><h1>{{buttonLabel}}</h1></div>
+        <div class="output">{{output}}</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   const axios = require('axios');
+  import jsonChallenges from "./challenges/challenge.json";
 
   export default {
     name: 'App',
@@ -32,6 +44,7 @@
                 '    }\n' +
                 '}',
         output: '>',
+        // task: 'No Task.',
         finished: true,
         buttonLabel: 'Execute',
         languageId: 62,
@@ -39,6 +52,14 @@
     },
     mounted() {
       this.loadExample();
+      this.loadTask();
+    },
+    computed: {
+      task() {
+      return jsonChallenges.challenges.map((item) => {
+        return item.task;
+      })
+    }
     },
     methods: {
       executeCode() {
@@ -98,8 +119,6 @@
     }
 
     .btn {
-      width: 732px;
-      height: 10vh;
       display: flex;
       background-color: #4db37c;
       color: #09141c;
@@ -114,9 +133,16 @@
     }
 
     .output {
-      width: 700px;
-      height: 300px;
-      color: #4db37c;;
+      color: #4db37c;
+      background-color: #09141c;
+      font-family: monospace;
+      font-weight: bold;
+      padding: 16px;
+      font-size: 16px;
+    }
+
+    .task {
+      color: #ffffff;
       background-color: #09141c;
       font-family: monospace;
       font-weight: bold;
