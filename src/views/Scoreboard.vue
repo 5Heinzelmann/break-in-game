@@ -36,7 +36,7 @@
         name: "ScoreBoard",
         data() {
             return {
-                showScoreForm: true,
+                showScoreForm: false,
                 name: '',
                 minutes: 0,
                 seconds: 0,
