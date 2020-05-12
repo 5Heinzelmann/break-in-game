@@ -61,6 +61,9 @@
         },
         computed: {},
         methods: {
+            // TODO round score values to abs
+            // limit seconds to 59 max
+            // show error on input
             submitScore() {
                 const score = -0.6 * (this.minutes * 60 + this.seconds) + 1035;
                 this.scores.push({

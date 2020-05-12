@@ -22,7 +22,7 @@
     <codemirror v-model="input" :options="cmOptions" />
 
     <div @click="executeCode()" class="btn">
-      <h1>{{ buttonLabel }}</h1>
+      <span class="text-h4"><b>{{ buttonLabel }}</b></span>
     </div>
   </div>
 </template>
@@ -141,6 +141,7 @@ export default {
   cursor: pointer;
   justify-content: center;
   align-items: center;
+  padding: 10px;
   margin: 12px 0 14px 0;
 }
 
