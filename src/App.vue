@@ -1,30 +1,22 @@
 <template>
   <div id="app">
-    <div class="column">
-      <div class="col">
-        <label for="lang"></label>
-        <select id="lang" style="font-size: x-large" v-model="languageId">
-          <option :value="63">Java Script</option>
-          <option :value="62">Java</option>
-        </select>
+    <div class="code-challenge">
+
+      <div class="task">{{ task }}</div>
+
+      <button @click="loadExample()" style="font-size: x-large">
+        Load example
+      </button>
+
+      <q-select v-model="selectedLang" :options="langOptions" label="Language" />
+
+      <codemirror v-model="input" :options="cmOptions" />
+
+      <div @click="executeCode()" class="btn">
+        <h1>{{ buttonLabel }}</h1>
       </div>
-      <div class="col">
-        <div class="task">{{ task }}</div>
-      </div>
-      <div class="col">
-        <button @click="loadExample()" style="font-size: x-large">
-          Load example
-        </button>
-        <label>
-          <codemirror v-model="input" :options="cmOptions" />
-        </label>
-      </div>
-      <div class="col">
-        <div @click="executeCode()" class="btn">
-          <h1>{{ buttonLabel }}</h1>
-        </div>
-        <div class="output">{{ output }}</div>
-      </div>
+
+      <div class="output">{{ output }}</div>
     </div>
   </div>
 </template>
@@ -32,11 +24,15 @@
 <script>
 const axios = require("axios");
 import jsonChallenges from "./challenges/challenge.json";
-import 'codemirror/theme/base16-dark.css'
+import "codemirror/theme/base16-dark.css";
 
 export default {
   name: "App",
   data() {
+    const langs = jsonChallenges
+      .languages
+      .map(lang => ({label: lang.name, value: lang.id}));
+
     return {
       url: "https://api.judge0.com/submissions/",
       interval: null,
@@ -49,10 +45,10 @@ export default {
         "    }\n" +
         "}",
       output: ">",
-      // task: 'No Task.',
       finished: true,
       buttonLabel: "Execute",
-      languageId: 62,
+      selectedLang: langs.length > 0 ? langs[0] : null,
+      langOptions: langs,
       cmOptions: {
         tabSize: 4,
         mode: "text/javascript",
@@ -64,13 +60,13 @@ export default {
   },
   mounted() {
     this.loadExample();
-    this.loadTask();
   },
   computed: {
     task() {
-      return jsonChallenges.challenges.map(item => {
+      const allTasks = jsonChallenges.challenges.map(item => {
         return item.task;
       });
+      return allTasks.length !== 0 ? allTasks[0] : null;
     }
   },
   methods: {
@@ -124,6 +120,7 @@ export default {
   height: 100vh;
   width: 100vw;
   background-color: #262c31;
+  overflow: scroll;
 
   .input {
     width: 700px;
