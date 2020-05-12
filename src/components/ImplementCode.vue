@@ -1,7 +1,5 @@
 <template>
   <div class="code-challenge">
-    <div class="task">{{ task }}</div>
-
     <div class="controls">
       <q-btn
         color="white"
@@ -26,9 +24,6 @@
     <div @click="executeCode()" class="btn">
       <h1>{{ buttonLabel }}</h1>
     </div>
-
-    <div class="output">{{ output }}</div>
-    <router-link to="/score">Show Scoreboard</router-link>
   </div>
 </template>
 
@@ -38,7 +33,7 @@ import jsonChallenges from "../challenges/challenge.json";
 import "codemirror/theme/base16-dark.css";
 
 export default {
-  name: "Implementation",
+  name: "ImplementCode",
   data() {
     const langs = jsonChallenges.languages.map(lang => ({
       label: lang.name,
@@ -57,7 +52,6 @@ export default {
         '        System.out.println("Hello, Java ;)");\n' +
         "    }\n" +
         "}",
-      output: ">",
       finished: true,
       buttonLabel: "Execute",
       selectedLang: langs.length > 0 ? langs[0] : null,
@@ -75,12 +69,6 @@ export default {
     this.loadExample();
   },
   computed: {
-    task() {
-      const allTasks = jsonChallenges.challenges.map(item => {
-        return item.task;
-      });
-      return allTasks.length !== 0 ? allTasks[0] : null;
-    },
     selectedLanguageId() {
       return this.selectedLang ? this.selectedLang.value : null;
     }
@@ -158,23 +146,5 @@ export default {
 
 .btn:hover {
   background-color: #5acc8d;
-}
-
-.output {
-  color: #4db37c;
-  background-color: #09141c;
-  font-family: monospace;
-  font-weight: bold;
-  padding: 16px;
-  font-size: 16px;
-}
-
-.task {
-  color: #ffffff;
-  background-color: #09141c;
-  font-family: monospace;
-  font-weight: bold;
-  padding: 16px;
-  font-size: 16px;
 }
 </style>
