@@ -1,11 +1,21 @@
 <template>
     <div class="board">
-        <div>
-            <q-input v-model="name" label="Your name"/>
-            <q-input type="number" v-model="score" label="Your score"/>
-
-            <q-btn color="primary" :disable="name === '' || score < 0" @click="submitScore()">Submit</q-btn>
-        </div>
+        <q-btn @click="showScoreForm = true">Submit to Scoreboard</q-btn>
+        <q-dialog v-model="showScoreForm" persistent>
+            <q-card>
+                <q-card-section>
+                    <q-input v-model="name" label="Your name"/>
+                    <q-input type="number" v-model.number="minutes" label="Minutes"/>
+                    <q-input type="number" v-model.number="seconds" label="Seoncds"/>
+                </q-card-section>
+                <q-card-actions>
+                    <q-btn @click="showScoreForm = false">Cancel</q-btn>
+                    <q-btn color="primary" :disable="name === '' || minutes < -1 || seconds < 0" @click="submitScore()">
+                        Submit
+                    </q-btn>
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
         <q-table
                 title="Scoreboard"
                 :data="scores"
@@ -23,8 +33,10 @@
         name: "ScoreBoard",
         data() {
             return {
+                showScoreForm: false,
                 name: '',
-                score: null,
+                minutes: 0,
+                seconds: 0,
                 scores: [],
                 columns: [
                     {name: 'name', label: 'Username', field: 'name', align: 'left'},
@@ -40,31 +52,37 @@
         },
         mounted() {
             if (localStorage.scores) {
-                this.scores = JSON.parse(localStorage.scores)
+                this.scores = JSON.parse(localStorage.scores);
+                this.sortScores();
             }
         },
         computed: {},
         methods: {
             submitScore() {
-                if (this.name !== '' && this.score >= 0 && this.score < Number.MAX_SAFE_INTEGER) {
-                    this.scores.push({
-                        id: this.uuidv4(),
-                        name: this.name,
-                        score: this.score
-                    });
-                    this.scores = this.scores.sort((a, b) => {
-                        return a.score < b.score
-                    });
-                    localStorage.scores = JSON.stringify(this.scores);
-                    this.name = '';
-                    this.score = '';
-                }
+                const score = 90000 - ((this.minutes * 60 + this.seconds) * 5);
+                console.log(score);
+                this.scores.push({
+                    id: this.uuidv4(),
+                    name: this.name,
+                    score: score
+                });
+                this.sortScores();
+                localStorage.scores = JSON.stringify(this.scores);
+                this.name = '';
+                this.minutes = 0;
+                this.seconds = 0;
             },
             uuidv4() {
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                     return v.toString(16);
                 });
+            },
+            sortScores() {
+                this.scores = this.scores.sort((a, b) => {
+                    return a.score < b.score
+                });
+
             }
         },
     };
