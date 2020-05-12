@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import CodeChallenge from '../components/CodeChallenge.vue'
+import CodeChallenge from '../views/CodeChallenge.vue'
 
 Vue.use(VueRouter);
 

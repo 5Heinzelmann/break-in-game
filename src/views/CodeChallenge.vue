@@ -21,6 +21,7 @@
       />
     </div>
 
+    <!-- <router-view></router-view> -->
     <codemirror v-model="input" :options="cmOptions" />
 
     <div @click="executeCode()" class="btn">
@@ -28,7 +29,6 @@
     </div>
 
     <div class="output">{{ output }}</div>
-    <router-link to="/score">Show Scoreboard</router-link>
   </div>
 </template>
 
