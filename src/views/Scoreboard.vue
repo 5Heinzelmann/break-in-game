@@ -1,14 +1,17 @@
 <template>
     <div class="board">
-        <q-btn @click="showScoreForm = true">Submit to Scoreboard</q-btn>
+        <router-link to="/">Back to Coding Challenge</router-link>
+        <q-btn @click="showScoreForm = true">New Entry</q-btn>
         <q-dialog v-model="showScoreForm" persistent>
             <q-card>
                 <q-card-section>
                     <q-input v-model="name" label="Your name"/>
-                    <q-input type="number" v-model.number="minutes" label="Minutes"/>
-                    <q-input type="number" v-model.number="seconds" label="Seoncds"/>
+                    <div style="display: flex">
+                        <q-input type="number" v-model.number="minutes" label="Minutes"/>
+                        <q-input type="number" v-model.number="seconds" label="Seoncds"/>
+                    </div>
                 </q-card-section>
-                <q-card-actions>
+                <q-card-actions align="right">
                     <q-btn @click="showScoreForm = false">Cancel</q-btn>
                     <q-btn color="primary" :disable="name === '' || minutes < -1 || seconds < 0" @click="submitScore()">
                         Submit
@@ -33,7 +36,7 @@
         name: "ScoreBoard",
         data() {
             return {
-                showScoreForm: false,
+                showScoreForm: true,
                 name: '',
                 minutes: 0,
                 seconds: 0,
@@ -91,6 +94,7 @@
 <style lang="scss">
     .board {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
     }
 </style>

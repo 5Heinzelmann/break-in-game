@@ -28,6 +28,7 @@
     </div>
 
     <div class="output">{{ output }}</div>
+    <router-link to="/score">Show Scoreboard</router-link>
   </div>
 </template>
 
