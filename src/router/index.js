@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import CodeChallenge from '../views/CodeChallenge.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
   const routes = [
   {
@@ -11,17 +11,14 @@ Vue.use(VueRouter)
     component: CodeChallenge
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/score',
+    name: 'Scoreboard',
+    component: () => import('../views/Scoreboard.vue')
   }
-]
+];
 
 const router = new VueRouter({
   routes
-})
+});
 
 export default router
