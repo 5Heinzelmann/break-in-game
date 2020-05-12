@@ -23,5 +23,6 @@ export default {
   width: 100vw;
   background-color: #262c31;
   overflow: scroll;
+  background-image: url("assets/riddle light.jpg");
 }
 </style>
