@@ -70,6 +70,7 @@
                 this.name = '';
                 this.minutes = 0;
                 this.seconds = 0;
+                this.showScoreForm = false;
             },
             uuidv4() {
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
