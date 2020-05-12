@@ -59,8 +59,7 @@
         computed: {},
         methods: {
             submitScore() {
-                const score = 90000 - ((this.minutes * 60 + this.seconds) * 5);
-                console.log(score);
+                const score = -0.6 * (this.minutes * 60 + this.seconds) + 1035;
                 this.scores.push({
                     id: this.uuidv4(),
                     name: this.name,
