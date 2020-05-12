@@ -2,11 +2,13 @@
   "languages": [
     {
       "id": 62,
-      "name": "Java"
+      "name": "Java",
+      "example": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, Java ;)\");\n    }\n}"
     },
     {
       "id": 63,
-      "name": "JavaScript"
+      "name": "JavaScript",
+      "example": "const x = \"moin\";\nconsole.log(x, x);"
     }
   ],
   "challenges": [

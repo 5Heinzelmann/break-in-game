@@ -3,11 +3,13 @@
     <div class="task">{{ task }}</div>
 
     <div class="controls">
-      <button @click="loadExample()" style="font-size: x-large">
-        Load example
-      </button>
+      <q-btn
+        color="white"
+        text-color="black"
+        label="Load example"
+        @click="loadExample()"
+      />
 
-      <q-btn color="white" text-color="black" label="Standard" />
       <q-select
         v-model="selectedLang"
         :options="langOptions"
@@ -15,6 +17,7 @@
         filled
         square
         bg-color="white"
+        class="lang-select"
       />
     </div>
 
@@ -38,7 +41,8 @@ export default {
   data() {
     const langs = jsonChallenges.languages.map(lang => ({
       label: lang.name,
-      value: lang.id
+      value: lang.id,
+      example: lang.example
     }));
 
     return {
@@ -75,6 +79,9 @@ export default {
         return item.task;
       });
       return allTasks.length !== 0 ? allTasks[0] : null;
+    },
+    selectedLanguageId() {
+      return this.selectedLang ? this.selectedLang.value : null;
     }
   },
   methods: {
@@ -84,7 +91,7 @@ export default {
         this.buttonLabel = "Wait...";
         const data = {
           source_code: this.input,
-          language_id: this.languageId
+          language_id: this.selectedLanguageId
         };
 
         axios.post(this.url, data).then(resp => {
@@ -109,14 +116,27 @@ export default {
       });
     },
     loadExample() {
-      this.input =
-        this.languageId === 62 ? this.javaExample : this.javaScriptExample;
+      this.input = this.selectedLang ? this.selectedLang.example : "";
     }
   }
 };
 </script>
 
 <style lang="scss">
+.code-challenge {
+  min-width: 700px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+
+  .lang-select {
+    width: 200px;
+  }
+}
+
 .input {
   width: 700px;
   height: 300px;
