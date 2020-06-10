@@ -1,5 +1,7 @@
 <template>
     <div class="code-challenge">
+        <div class="grid-container"></div>
+        <div class="grid-headerline"></div>
         <div class="task">{{ task }}</div>
 
         <ImplementCode/>
@@ -46,7 +48,20 @@
             padding: 16px;
             font-size: 16px;
         }
-
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: 20% 20% 20% 20% 20%;
+            grid-template-rows: 15% 40% 15% 30%;            
+        }
+        
+        .grid-headerline {
+            align-self: stretch;
+            // grid-column-start: 1;
+            // grid-column-end: span col4-start;
+            // grid-row-start: 2;
+            // grid-row-end: span 2;
+        }
     }
 
 </style>
