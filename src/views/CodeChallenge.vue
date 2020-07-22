@@ -189,6 +189,7 @@
         .btn {
             display: flex;
             background-color: #a9218e;
+            // TODO adjust color font
             color: #09141c;
             cursor: pointer;
             justify-content: center;
