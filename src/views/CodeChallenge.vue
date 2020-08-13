@@ -1,8 +1,11 @@
 <template>
     <div class="code-challenge ">
-        <div class="task">{{ task }}</div>
+        <div 
+            class="task">
+            {{ task }}
+        </div>
             
-            <div class="controls">
+        <div class="controls">
             <q-btn
                     class= "btn"
                     label="Hints for time penalty"
@@ -51,7 +54,10 @@
 
         </div>        
 
-        <div class="output">{{ output }}</div>
+        <div 
+            class="output">
+            {{ output }}
+        </div>
 
         <q-btn
                 class= "btn"
