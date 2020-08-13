@@ -1,5 +1,4 @@
 <template>
-    <!-- TODO to middle -->
     <div class="code-challenge ">
         <div class="task">{{ task }}</div>
             
@@ -12,7 +11,8 @@
             <q-select
                     v-model="selectedLang"
                     :options="langOptions"
-                    label="Language"
+                    label="Language"                    
+                    color="grey"
                     filled
                     square
                     bg-color="white"
@@ -21,7 +21,6 @@
             />
         </div>            
 
-        <!-- TODO Styling of Code Input? -->
         <codemirror v-model="input" :options="cmOptions"/>
 
         <div class="controls">
@@ -30,17 +29,26 @@
                     label="RESET"
             />
 
-            <!-- TODO background color -->
-            <q-input 
+            <q-input
                 square
                 filled
-                v-model="text"
+                bg-color="white"
+                color="grey"
                 label="Please set your input"
             />
 
-            <div @click="executeCode()" class="btn">
-                <span class="text-h4"><b>{{ buttonLabel }}</b></span>
-            </div>
+            <q-btn 
+                :loading="loadingExecute"
+                class= "btn"
+                @click="executeCode()"
+            >
+                {{ buttonLabel }}
+                <template v-slot:loading>
+                    {{ buttonLabel }}
+                    <q-spinner-gears/>
+                </template>
+            </q-btn>
+
         </div>        
 
         <div class="output">{{ output }}</div>
@@ -86,6 +94,7 @@
                     "}",
                 finished: true,
                 buttonLabel: "Execute",
+                loadingExecute: false,
                 selectedLang: langs.length > 0 ? langs[0] : null,
                 langOptions: langs,
                 cmOptions: {
@@ -116,6 +125,7 @@
                 if (this.finished) {
                     this.finished = false;
                     this.buttonLabel = "Wait...";
+                    this.loadingExecute = true;
                     const data = {
                         source_code: this.input,
                         language_id: this.selectedLanguageId
@@ -140,6 +150,7 @@
                         : "> " + resp.data.status.description;
                     this.finished = true;
                     this.buttonLabel = "Execute";
+                    this.loadingExecute = false;
                 });
             },
             loadExample() {
@@ -152,11 +163,10 @@
 <style lang="scss">
     
     .code-challenge {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        margin: auto;
+        padding: 30px;
         height: 100vh;
-        width: 25%;
+        width: 50%;
 
         .output {
             color: #ffffff;
@@ -189,8 +199,8 @@
         .btn {
             display: flex;
             background-color: #a9218e;
-            // TODO adjust color font
-            color: #09141c;
+            font-weight: bold;
+            color: #f4f4f4;
             cursor: pointer;
             justify-content: center;
             align-items: center;
