@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
     <div class="code-challenge ">
         <div 
             class="task">
@@ -37,7 +37,8 @@
                 filled
                 bg-color="white"
                 color="grey"
-                label="Please set your input"
+                type="number"
+                label="Number as input"
             />
 
             <q-btn 
@@ -70,15 +71,11 @@
 
 <script>
     import jsonChallenges from "../challenges/challenge.json";
-    // import ImplementCode from '@/components/ImplementCode.vue';
     const axios = require("axios");
     import "codemirror/theme/base16-dark.css";
 
     export default {
         name: "CodeChallenge",
-        // components: {
-        //     ImplementCode
-        // },
         data() {
             const langs = jsonChallenges.languages.map(lang => ({
                 label: lang.name,

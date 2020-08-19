@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
     <div class="board">
         <router-link to="/">Back to Coding Challenge</router-link>
         <q-btn @click="showScoreForm = true">New Entry</q-btn>
