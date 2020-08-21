@@ -88,6 +88,8 @@ export default {
     return {
       numberAsInput: '',
       output: 'No Output yet',
+      // uses port 80 as default. if this wont work use: http://localhost:3000/submissions/ and
+      // make sure to update docker-compose.yml to  ports: - "3000:3000"
       url: "http://localhost/submissions/",
       interval: null,
       input: "",
