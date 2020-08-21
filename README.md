@@ -6,12 +6,13 @@ npm install
 ```
 
 ### Compiles and hot-reloads for development
-Make sure to start Judge0 code execution API before.
+Make sure to start Judge0 code execution API before (see below)
 ```
 npm run serve
 ```
 
 ### Compiles and minifies for production
+Make sure to start Judge0 code execution API before (see below)
 ```
 npm run build
 ```
@@ -24,7 +25,7 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-## Start judge0 API locally
+## Start judge0 code execution API locally
 
 ```
 # Download sources
