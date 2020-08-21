@@ -88,7 +88,7 @@ export default {
     return {
       numberAsInput: '',
       output: 'No Output yet',
-      url: "http://localhost:3000/submissions/",
+      url: "http://localhost/submissions/",
       interval: null,
       input: "",
       javaScriptExample: 'const x = "moin";\n' + "console.log(x, x);",

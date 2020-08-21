@@ -22,3 +22,9 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+# Start local judge0 API
+
+https://github.com/judge0/api/blob/master/CHANGELOG.md#with-http
+
+docker-compose up -d db redis
