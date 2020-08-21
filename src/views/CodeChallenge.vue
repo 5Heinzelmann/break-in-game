@@ -88,7 +88,7 @@ export default {
     return {
       numberAsInput: '',
       output: 'No Output yet',
-      url: "https://api.judge0.com/submissions/",
+      url: "http://localhost:3000/submissions/",
       interval: null,
       input: "",
       javaScriptExample: 'const x = "moin";\n' + "console.log(x, x);",
