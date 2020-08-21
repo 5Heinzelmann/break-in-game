@@ -19,7 +19,7 @@
       "initialCode": [
         {
           "java": "import java.util.*; \nimport java.io.*;\n\nclass Main {\n\npublic static int CalculateFactorial(int number) {\nint factorial = 1;\n// code goes here \nreturn factorial;\n}\n\npublic static void main (String[] args) {\n// keep this function call here\n System.out.print(CalculateFactorial(number));\n}\n\n}",
-          "javascript": "function CalculateFactorial(number) { \n var factorial = 1;\n // code goes here \n return factorial; \n\n}"
+          "javascript": "function CalculateFactorial(number) { \n var factorial = 1;\n // code goes here \n return factorial; \n\n} CalculateFactorial(5);"
         }
       ],
       "testInputs": [
