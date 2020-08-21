@@ -6,6 +6,7 @@ npm install
 ```
 
 ### Compiles and hot-reloads for development
+Make sure to start Judge0 code execution API before.
 ```
 npm run serve
 ```
@@ -23,8 +24,18 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-# Start local judge0 API
+## Start judge0 API locally
 
-https://github.com/judge0/api/blob/master/CHANGELOG.md#with-http
+```
+# Download sources
+wget https://github.com/judge0/api/releases/download/v1.10.0/judge0-v1.10.0.zip
+unzip judge0-v1.10.0.zip
 
+# Start databases
 docker-compose up -d db redis
+
+# Start service
+docker-compose up
+
+# Tutorial: https://github.com/judge0/api/blob/master/CHANGELOG.md#with-http
+```
