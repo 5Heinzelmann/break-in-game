@@ -2,13 +2,11 @@
   "languages": [
     {
       "id": 62,
-      "name": "Java",
-      "example": "class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, Java ;)\");\n    }\n}"
+      "name": "Java"
     },
     {
       "id": 63,
-      "name": "JavaScript",
-      "example": "const x = \"moin\";\nconsole.log(x, x);"
+      "name": "JavaScript"
     }
   ],
   "challenges": [
@@ -16,12 +14,12 @@
       "id": 1,
       "task": "You have to code the function CalculateFactorial(number), which calculates a factorial with the number as input. \n The function should work for all positiv integers. \n Example: if number = 3, then your program should return 6 (3 * 2 * 1).",
       "defaultInput": 3,
-      "initialCode": [
+      "initialCode": 
         {
           "java": "import java.util.*; \nimport java.io.*;\n\nclass Main {\n\npublic static int CalculateFactorial(int number) {\nint factorial = 1;\n// code goes here \nreturn factorial;\n}\n\npublic static void main (String[] args) {\n// keep this function call here\n System.out.print(CalculateFactorial(number));\n}\n\n}",
           "javascript": "function CalculateFactorial(number) { \n var factorial = 1;\n // code goes here \n return factorial; \n\n} CalculateFactorial(5);"
         }
-      ],
+      ,
       "testInputs": [
         3,
         9,

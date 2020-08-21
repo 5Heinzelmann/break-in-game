@@ -93,13 +93,13 @@ export default {
       url: "http://localhost/submissions/",
       interval: null,
       input: "",
-      javaScriptExample: 'const x = "moin";\n' + "console.log(x, x);",
-      javaExample:
-          "class Main {\n" +
-          "    public static void main(String[] args) {\n" +
-          '        System.out.println("Hello, Java ;)");\n' +
-          "    }\n" +
-          "}",
+    //   javaScriptExample: 'const x = "moin";\n' + "console.log(x, x);",
+    //   javaExample:
+    //       "class Main {\n" +
+    //       "    public static void main(String[] args) {\n" +
+    //       '        System.out.println("Hello, Java ;)");\n' +
+    //       "    }\n" +
+    //       "}",
       finished: true,
       buttonLabel: "Execute",
       loadingExecute: false,
@@ -179,7 +179,7 @@ export default {
           });
     },
     loadExample() {
-      this.input = this.selectedLang ? this.selectedLang.example : "";
+        this.input = jsonChallenges.challenges[0].initialCode[this.selectedLang.label.toLowerCase()];
     }
   }
 };
