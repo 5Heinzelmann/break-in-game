@@ -25,9 +25,5 @@ npm run serve
 ```
 
 ## Download new judge0
-Für Windows kann der Link direkt im Browser (ohne den Befehl wget) eingegeben werden, das unzip kann händisch erfolgen.
-```
-wget https://github.com/judge0/api/releases/download/v1.10.0/judge0-v1.10.0.zip
-unzip judge0-v1.10.0.zip
-cd judge0-v1.10.0
-```
+Neue Versionen nach der 1.10.0?: https://github.com/judge0/api/releases
+- Für Windows kann der Link direkt im Browser (ohne den Befehl wget) eingegeben werden, das unzip kann händisch erfolgen.
