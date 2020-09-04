@@ -2,6 +2,7 @@
 node_modules
 /dist
 /judge0/srv
+/judge0/judge0-v1.10.0
 
 # local env files
 .env.local
