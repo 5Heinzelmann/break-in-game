@@ -130,12 +130,14 @@ export default {
         this.buttonLabel = "Wait...";
         this.loadingExecute = true;
 
-        let executionCode = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()];
+        const prefix = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()].prefix;
+        const postfix = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()].postfix;
+        let executionCode = prefix + this.input + postfix;
         executionCode = executionCode.replace(REPLACE_WITH_INPUT, this.numberAsInput);
         console.log(executionCode);
 
         const data = {
-          source_code: this.input + executionCode,
+          source_code: executionCode,
           language_id: this.selectedLanguageId
         };
 
