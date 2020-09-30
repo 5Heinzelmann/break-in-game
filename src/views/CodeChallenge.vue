@@ -74,6 +74,7 @@
 <script>
 import jsonChallenges from "../challenges/challenge.json";
 import "codemirror/theme/base16-dark.css";
+import "codemirror/mode/javascript/javascript.js";
 
 const axios = require("axios");
 const REPLACE_WITH_INPUT = "REPLACE_WITH_INPUT";
@@ -102,6 +103,8 @@ export default {
       langOptions: langs,
       cmOptions: {
         tabSize: 4,
+        styleActiveLine: true,
+        styleSelectedText: true,
         mode: "text/javascript",
         theme: "base16-dark",
         lineNumbers: true,
