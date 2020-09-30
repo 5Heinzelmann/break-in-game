@@ -72,9 +72,10 @@
 
 <script>
 import jsonChallenges from "../challenges/challenge.json";
+import "codemirror/theme/base16-dark.css";
 
 const axios = require("axios");
-import "codemirror/theme/base16-dark.css";
+const REPLACE_WITH_INPUT = "REPLACE_WITH_INPUT";
 
 export default {
   name: "CodeChallenge",
@@ -93,13 +94,6 @@ export default {
       url: "http://localhost/submissions/",
       interval: null,
       input: "",
-    //   javaScriptExample: 'const x = "moin";\n' + "console.log(x, x);",
-    //   javaExample:
-    //       "class Main {\n" +
-    //       "    public static void main(String[] args) {\n" +
-    //       '        System.out.println("Hello, Java ;)");\n' +
-    //       "    }\n" +
-    //       "}",
       finished: true,
       buttonLabel: "Execute",
       loadingExecute: false,
@@ -135,10 +129,12 @@ export default {
         this.buttonLabel = "Wait...";
         this.loadingExecute = true;
 
-        console.log(this.input);
+        let executionCode = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()];
+        executionCode = executionCode.replace(REPLACE_WITH_INPUT, this.numberAsInput);
+        console.log(executionCode);
 
         const data = {
-          source_code: this.input,
+          source_code: this.input + executionCode,
           language_id: this.selectedLanguageId
         };
 
