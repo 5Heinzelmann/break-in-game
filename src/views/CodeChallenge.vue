@@ -30,6 +30,7 @@
       <q-btn
           class="btn"
           label="RESET"
+          @click="loadExample()"
       />
 
       <q-input
