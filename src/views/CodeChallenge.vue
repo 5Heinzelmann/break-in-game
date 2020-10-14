@@ -89,7 +89,7 @@ export default {
     }));
 
     return {
-      numberAsInput: '',
+      numberAsInput: '3',
       output: 'No Output yet',
       // uses port 80 as default. if this wont work use: http://localhost:3000/submissions/ and
       // make sure to update docker-compose.yml to  ports: - "3000:3000"
@@ -137,7 +137,6 @@ export default {
         const postfix = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()].postfix;
         let executionCode = prefix + this.input + postfix;
         executionCode = executionCode.replace(REPLACE_WITH_INPUT, this.numberAsInput);
-        console.log(executionCode);
 
         const data = {
           source_code: executionCode,
@@ -153,6 +152,7 @@ export default {
               }, 500);
             })
             .catch((e) => {
+              console.log(e);
               this.output = e;
               this.resetForm();
             });
@@ -160,19 +160,24 @@ export default {
     },
     resetForm: function () {
       this.finished = true;
-      this.numberAsInput = '';
       this.buttonLabel = "Execute";
       this.loadingExecute = false;
     },
     fetchResult(token) {
       axios.get(this.url + token)
           .then(resp => {
+            console.log(resp);
+
             if (resp.data.status.id > 2) {
               clearInterval(this.interval);
             }
+
             this.output = resp.data.stdout
-                ? "> " + resp.data.stdout
-                : "> " + resp.data.status.description;
+
+            if(!this.output) {
+              this.output = resp.data.stderr ? resp.data.stderr : resp.data.compile_output
+            }
+
             this.resetForm();
           })
           .catch((e) => {
