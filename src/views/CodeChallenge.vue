@@ -172,7 +172,6 @@ export default {
     fetchResult(token) {
       axios.get(this.url + token)
           .then(resp => {
-            console.log(resp);
 
             if (resp.data.status.id > 2) {
               clearInterval(this.interval);
@@ -203,6 +202,7 @@ export default {
       var totalLines = this.codemirror.lineCount();
       var totalChars = this.codemirror.getTextArea().value.length;
       this.codemirror.autoFormatRange({ line: 0, ch: 0 }, { line: totalLines, ch: totalChars });
+      this.codemirror.setSelection({ line: 0, ch: 0 }, { line: 0, ch: 0 });
     }
   }
 };
