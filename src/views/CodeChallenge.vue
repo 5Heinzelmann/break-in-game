@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="code-challenge ">
+  <div class="code-challenge">
     <div
         class="task">
       {{ task }}
@@ -9,6 +9,12 @@
       <q-btn
           class="btn"
           label="Hints for time penalty"
+      />
+
+      <q-btn
+          class="btn"
+          label="Auto Format"
+          @click="autoFormatCode()"
       />
 
       <q-select
@@ -269,6 +275,12 @@ export default {
     padding: 16px;
     font-size: 16px;
     width: 100%;
+  }
+
+  .CodeMirror {
+    height: auto;
+    min-height: 200px;
+    max-height: 360px;
   }
 }
 </style>
