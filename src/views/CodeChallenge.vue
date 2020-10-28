@@ -24,7 +24,7 @@
       />
     </div>
 
-    <codemirror v-model="input" :options="cmOptions"/>
+    <codemirror v-model="input" :options="cmOptions" ref="cmEditor" />
 
     <div class="controls">
       <q-btn
@@ -75,6 +75,8 @@
 import jsonChallenges from "../challenges/challenge.json";
 import "codemirror/theme/base16-dark.css";
 import "codemirror/mode/javascript/javascript.js";
+import "codemirror/mode/clike/clike.js";
+import "codemirror-formatting/formatting.js";
 
 const axios = require("axios");
 const REPLACE_WITH_INPUT = "REPLACE_WITH_INPUT";
@@ -105,7 +107,7 @@ export default {
         tabSize: 4,
         styleActiveLine: true,
         styleSelectedText: true,
-        mode: "text/javascript",
+        mode: "text/x-java",
         theme: "base16-dark",
         lineNumbers: true,
         line: true
@@ -124,10 +126,14 @@ export default {
         return item.task;
       });
       return allTasks.length !== 0 ? allTasks[0] : null;
+    },
+    codemirror() {
+      return this.$refs.cmEditor.codemirror;
     }
   },
   methods: {
     executeCode() {
+      this.autoFormatCode();
       if (this.finished) {
         this.finished = false;
         this.buttonLabel = "Wait...";
@@ -186,7 +192,17 @@ export default {
           });
     },
     loadExample() {
-        this.input = jsonChallenges.challenges[0].initialCode[this.selectedLang.label.toLowerCase()];
+        const selectedLang = this.selectedLang.label.toLowerCase();
+        this.input = jsonChallenges.challenges[0].initialCode[selectedLang];
+        this.cmOptions.mode = jsonChallenges.challenges[0].syntaxHighlight[selectedLang];
+        setTimeout(() => {
+          this.autoFormatCode();
+        }, 200);
+    },
+    autoFormatCode() {
+      var totalLines = this.codemirror.lineCount();
+      var totalChars = this.codemirror.getTextArea().value.length;
+      this.codemirror.autoFormatRange({ line: 0, ch: 0 }, { line: totalLines, ch: totalChars });
     }
   }
 };
