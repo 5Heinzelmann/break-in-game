@@ -198,7 +198,11 @@ export default {
       const expectedOutput = jsonChallenges.challenges[0].expectedOutputs[0];
       this.executeCode().then(answer => {
         const a = answer.toString().trim();
-        alert(`Sorry, your code is wrong :/ For ${this.numberAsInput} it should return ${expectedOutput}. But it returned ${a} instead.`);
+        if(+answer === +expectedOutput) {
+          alert("Hooray!");
+        } else {
+          alert(`Sorry, your code is wrong :/ For ${this.numberAsInput} it should return ${expectedOutput}. But it returned ${a} instead.`);
+        }
       });
     }
   }
