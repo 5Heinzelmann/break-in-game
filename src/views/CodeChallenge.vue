@@ -25,8 +25,8 @@
           color="grey"
           filled
           label="Language"
-          square
-          @input="loadExample()"
+          square      
+          @input="checkReset = true"
       />
     </div>
 
@@ -35,8 +35,8 @@
     <div class="controls">
       <q-btn
           class="btn"
-          label="RESET"
-          @click="loadExample()"
+          label="Reset"
+          @click="checkReset = true"
       />
 
       <q-input
@@ -74,6 +74,21 @@
         @click="runTests()"
     />
 
+    <q-dialog v-model="checkReset" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <!-- <q-avatar icon="signal_wifi_off" color="primary" text-color="white" /> -->
+          <q-icon name="warning" class="text-red" style="font-size: 2rem;" />
+          <span class="q-ml-sm">Your code will be reseted. Are you sure?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn label="No" v-close-popup />
+          <q-btn label="Yes reset my code" color="accent" @click="loadExample()" v-close-popup />          
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <router-link to="/score">Show Scoreboard</router-link>
   </div>
 </template>
@@ -104,6 +119,7 @@ export default {
       // make sure to update docker-compose.yml to  ports: - "3000:3000"
       url: "http://localhost/submissions/?wait=true",
       input: "",
+      checkReset: false,
       finished: true,
       buttonLabel: "Execute",
       loadingExecute: false,
