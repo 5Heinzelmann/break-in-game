@@ -20,17 +20,17 @@
       <q-select
           v-model="selectedLang"
           :options="langOptions"
-          label="Language"
-          color="grey"
-          filled
-          square
           bg-color="white"
           class="lang-select"
+          color="grey"
+          filled
+          label="Language"
+          square
           @input="loadExample()"
       />
     </div>
 
-    <codemirror v-model="input" :options="cmOptions" ref="cmEditor" />
+    <codemirror ref="cmEditor" v-model="input" :options="cmOptions"/>
 
     <div class="controls">
       <q-btn
@@ -40,13 +40,13 @@
       />
 
       <q-input
-          square
-          filled
+          v-model="numberAsInput"
           bg-color="white"
           color="grey"
-          v-model="numberAsInput"
-          type="number"
+          filled
           label="Number as input"
+          square
+          type="number"
       />
 
       <q-btn
@@ -71,6 +71,7 @@
     <q-btn
         class="btn"
         label="Final Test (on Success -> Show Scorecard)"
+        @click="runTests()"
     />
 
     <router-link to="/score">Show Scoreboard</router-link>
@@ -101,8 +102,7 @@ export default {
       output: 'No Output yet',
       // uses port 80 as default. if this wont work use: http://localhost:3000/submissions/ and
       // make sure to update docker-compose.yml to  ports: - "3000:3000"
-      url: "http://localhost/submissions/",
-      interval: null,
+      url: "http://localhost/submissions/?wait=true",
       input: "",
       finished: true,
       buttonLabel: "Execute",
@@ -139,76 +139,65 @@ export default {
   },
   methods: {
     executeCode() {
-      this.autoFormatCode();
-      if (this.finished) {
-        this.finished = false;
-        this.buttonLabel = "Wait...";
-        this.loadingExecute = true;
+      return new Promise((resolve, reject) => {
+        this.autoFormatCode();
+        if (this.finished) {
+          this.finished = false;
+          this.buttonLabel = "Wait...";
+          this.loadingExecute = true;
 
-        const prefix = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()].prefix;
-        const postfix = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()].postfix;
-        let executionCode = prefix + this.input + postfix;
-        executionCode = executionCode.replace(REPLACE_WITH_INPUT, this.numberAsInput);
+          const prefix = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()].prefix;
+          const postfix = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()].postfix;
+          let executionCode = prefix + this.input + postfix;
+          executionCode = executionCode.replace(REPLACE_WITH_INPUT, this.numberAsInput);
 
-        const data = {
-          source_code: executionCode,
-          language_id: this.selectedLanguageId
-        };
+          const data = {
+            source_code: executionCode,
+            language_id: this.selectedLanguageId,
+          };
 
-        axios.post(this.url, data)
-            .then(resp => {
-              const token = resp.data.token;
-
-              this.interval = setInterval(() => {
-                this.fetchResult(token);
-              }, 500);
-            })
-            .catch((e) => {
-              console.log(e);
-              this.output = e;
-              this.resetForm();
-            });
-      }
+          axios.post(this.url, data)
+              .then(resp => {
+                this.output = resp.data.stdout
+                if (!this.output) {
+                  this.output = resp.data.stderr ? resp.data.stderr : resp.data.compile_output
+                }
+                this.resetForm();
+                resolve();
+              })
+              .catch((e) => {
+                console.error(e);
+                this.output = e;
+                this.resetForm();
+                reject();
+              });
+        }
+      });
     },
     resetForm: function () {
       this.finished = true;
       this.buttonLabel = "Execute";
       this.loadingExecute = false;
     },
-    fetchResult(token) {
-      axios.get(this.url + token)
-          .then(resp => {
-
-            if (resp.data.status.id > 2) {
-              clearInterval(this.interval);
-            }
-
-            this.output = resp.data.stdout
-
-            if(!this.output) {
-              this.output = resp.data.stderr ? resp.data.stderr : resp.data.compile_output
-            }
-
-            this.resetForm();
-          })
-          .catch((e) => {
-            this.output = e;
-            this.resetForm();
-          });
-    },
     loadExample() {
-        const selectedLang = this.selectedLang.label.toLowerCase();
-        this.input = jsonChallenges.challenges[0].initialCode[selectedLang];
-        this.cmOptions.mode = jsonChallenges.challenges[0].syntaxHighlight[selectedLang];
-        setTimeout(() => {
-          this.autoFormatCode();
-        }, 200);
+      const selectedLang = this.selectedLang.label.toLowerCase();
+      this.input = jsonChallenges.challenges[0].initialCode[selectedLang];
+      this.cmOptions.mode = jsonChallenges.challenges[0].syntaxHighlight[selectedLang];
+      setTimeout(() => {
+        this.autoFormatCode();
+      }, 200);
     },
     autoFormatCode() {
       var totalLines = this.codemirror.lineCount();
       var totalChars = this.codemirror.getTextArea().value.length;
-      this.codemirror.autoFormatRange({ line: 0, ch: 0 }, { line: totalLines, ch: totalChars });
-      this.codemirror.setSelection({ line: 0, ch: 0 }, { line: 0, ch: 0 });
+      this.codemirror.autoFormatRange({line: 0, ch: 0}, {line: totalLines, ch: totalChars});
+      this.codemirror.setSelection({line: 0, ch: 0}, {line: 0, ch: 0});
+    },
+    runTests() {
+      this.numberAsInput = jsonChallenges.challenges[0].testInputs[0];
+      this.executeCode().then(_ => {
+        console.log(this.output);
+      });
     }
   }
 };
