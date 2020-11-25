@@ -163,7 +163,7 @@ export default {
                   this.output = resp.data.stderr ? resp.data.stderr : resp.data.compile_output
                 }
                 this.resetForm();
-                resolve();
+                resolve(this.output);
               })
               .catch((e) => {
                 console.error(e);
@@ -195,8 +195,10 @@ export default {
     },
     runTests() {
       this.numberAsInput = jsonChallenges.challenges[0].testInputs[0];
-      this.executeCode().then(_ => {
-        console.log(this.output);
+      const expectedOutput = jsonChallenges.challenges[0].expectedOutputs[0];
+      this.executeCode().then(answer => {
+        const a = answer.toString().trim();
+        alert(`Sorry, your code is wrong :/ For ${this.numberAsInput} it should return ${expectedOutput}. But it returned ${a} instead.`);
       });
     }
   }
