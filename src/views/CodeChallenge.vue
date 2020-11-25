@@ -279,8 +279,7 @@ export default {
 
   .CodeMirror {
     height: auto;
-    min-height: 200px;
-    max-height: 360px;
+    max-height: 400px;
   }
 }
 </style>
