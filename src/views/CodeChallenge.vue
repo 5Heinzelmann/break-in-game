@@ -8,11 +8,6 @@
     <div class="controls">
       <q-btn
           class="btn"
-          label="Hints for time penalty"
-      />
-
-      <q-btn
-          class="btn"
           label="Auto Format"
           @click="autoFormatCode()"
       />
@@ -68,16 +63,17 @@
       {{ output }}
     </div>
 
-    <q-btn
-        class="btn"
-        label="Final Test (on Success -> Show Scorecard)"
-        @click="runTests()"
-    />
+    <div class="controls">
+      <q-btn
+          class="btn"
+          label="Final Test (on Success -> Show Scorecard Dialog)"
+          @click="runTests()"
+      />
+    </div>
 
     <q-dialog v-model="checkReset" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <!-- <q-avatar icon="signal_wifi_off" color="primary" text-color="white" /> -->
           <q-icon name="warning" class="text-red" style="font-size: 2rem;" />
           <span class="q-ml-sm">Your code will be reseted. Are you sure?</span>
         </q-card-section>

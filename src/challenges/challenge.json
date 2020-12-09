@@ -20,17 +20,17 @@
       },
       "initialCode":
         {
-          "java": "public static int FirstFactorial(int num) {\nreturn (num);\n}",
-          "javascript": "function CalculateFactorial(number) { \n var factorial = number;\n // code goes here \n return factorial; \n\n}"
+          "java": "public static int calculateFactorial(int number) { \n int factorial = number;\n // code goes here \nreturn factorial;\n}",
+          "javascript": "function calculateFactorial(number) { \n var factorial = number\n // code goes here \n return factorial\n\n}"
         },
       "executionCode": {
         "java": {
           "prefix": "public class Main {\n",
-          "postfix": "public static void main(String[] args) {\nSystem.out.println(FirstFactorial(REPLACE_WITH_INPUT));\n}\n}"
+          "postfix": "public static void main(String[] args) {\nSystem.out.println(calculateFactorial(REPLACE_WITH_INPUT));\n}\n}"
         },
         "javascript": {
           "prefix": "",
-          "postfix": "\nconsole.log(CalculateFactorial(REPLACE_WITH_INPUT));"
+          "postfix": "\nconsole.log(calculateFactorial(REPLACE_WITH_INPUT))"
         }
       },
       "testInputs": [
