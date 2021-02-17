@@ -20,7 +20,7 @@
           color="grey"
           filled
           label="Language"
-          square      
+          square
           @input="checkReset = true"
       />
     </div>
@@ -74,13 +74,13 @@
     <q-dialog v-model="checkReset" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <q-icon name="warning" class="text-red" style="font-size: 2rem;" />
+          <q-icon name="warning" class="text-red" style="font-size: 2rem;"/>
           <span class="q-ml-sm">Your code will be reseted. Are you sure?</span>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn label="No" v-close-popup />
-          <q-btn label="Yes reset my code" color="accent" @click="loadExample()" v-close-popup />          
+          <q-btn label="No" v-close-popup/>
+          <q-btn label="Yes reset my code" color="accent" @click="loadExample()" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -205,16 +205,50 @@ export default {
       this.codemirror.autoFormatRange({line: 0, ch: 0}, {line: totalLines, ch: totalChars});
       this.codemirror.setSelection({line: 0, ch: 0}, {line: 0, ch: 0});
     },
-    runTests() {
+    runTests: function () {
       this.numberAsInput = jsonChallenges.challenges[0].testInputs[0];
-      const expectedOutput = jsonChallenges.challenges[0].expectedOutputs[0];
+      let expectedOutput = jsonChallenges.challenges[0].expectedOutputs[0];
+      let answersAreCorrect = [];
+
       this.executeCode().then(answer => {
-        const a = answer.toString().trim();
-        if(+answer === +expectedOutput) {
-          alert("Hooray!");
+        let actual = answer.toString().trim();
+        if (+answer === +expectedOutput) {
+          answersAreCorrect.push({correct: true});
         } else {
-          alert(`Sorry, your code is wrong :/ For ${this.numberAsInput} it should return ${expectedOutput}. But it returned ${a} instead.`);
+          answersAreCorrect.push({correct: false, input: this.numberAsInput, expectedOutput});
         }
+
+        this.numberAsInput = jsonChallenges.challenges[0].testInputs[1];
+        expectedOutput = jsonChallenges.challenges[0].expectedOutputs[1];
+
+        this.executeCode().then(answer => {
+          actual = answer.toString().trim();
+          if (+answer === +expectedOutput) {
+            answersAreCorrect.push({correct: true});
+          } else {
+            answersAreCorrect.push({correct: false, input: this.numberAsInput, expectedOutput});
+          }
+
+          this.numberAsInput = jsonChallenges.challenges[0].testInputs[2];
+          expectedOutput = jsonChallenges.challenges[0].expectedOutputs[2];
+
+          // TODO please loop this
+          this.executeCode().then(answer => {
+            actual = answer.toString().trim();
+            if (+answer === +expectedOutput) {
+              answersAreCorrect.push({correct: true});
+            } else {
+              answersAreCorrect.push({correct: false, input: this.numberAsInput, expectedOutput});
+            }
+
+            console.log(answersAreCorrect);
+            if (!answersAreCorrect.filter(a => !a.correct).length) {
+              this.$router.push('/score')
+            } else {
+              alert("Oh no!");
+            }
+          })
+        })
       });
     }
   }
