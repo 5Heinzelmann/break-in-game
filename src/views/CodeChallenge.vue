@@ -1,91 +1,98 @@
 <template lang="html">
-  <div class="code-challenge">
-    <div
-        class="task">
-      {{ task }}
-    </div>
+  <div>
+    <div class="code-challenge">
+      <div
+          class="task">
+        {{ task }}
+      </div>
 
-    <div class="controls">
-      <q-btn
-          class="btn"
-          label="Auto Format"
-          @click="autoFormatCode()"
-      />
+      <div class="controls">
+        <q-btn
+            class="btn"
+            label="Auto Format"
+            @click="autoFormatCode()"
+        />
 
-      <q-select
-          v-model="selectedLang"
-          :options="langOptions"
-          bg-color="white"
-          class="lang-select"
-          color="grey"
-          filled
-          label="Language"
-          square      
-          @input="checkReset = true"
-      />
-    </div>
+        <q-select
+            v-model="selectedLang"
+            :options="langOptions"
+            bg-color="white"
+            class="lang-select"
+            color="grey"
+            filled
+            label="Language"
+            square      
+            @input="checkReset = true"
+        />
+      </div>
 
-    <codemirror ref="cmEditor" v-model="input" :options="cmOptions"/>
+      <codemirror ref="cmEditor" v-model="input" :options="cmOptions"/>
 
-    <div class="controls">
-      <q-btn
-          class="btn"
-          label="Reset"
-          @click="checkReset = true"
-      />
+      <div class="controls">
+        <q-btn
+            class="btn"
+            label="Reset"
+            @click="checkReset = true"
+        />
 
-      <q-input
-          v-model="numberAsInput"
-          bg-color="white"
-          color="grey"
-          filled
-          label="Number as input"
-          square
-          type="number"
-      />
+        <q-input
+            v-model="numberAsInput"
+            bg-color="white"
+            color="grey"
+            filled
+            label="Number as input"
+            square
+            type="number"
+        />
 
-      <q-btn
-          :loading="loadingExecute"
-          class="btn"
-          @click="executeCode()"
-      >
-        {{ buttonLabel }}
-        <template v-slot:loading>
+        <q-btn
+            :loading="loadingExecute"
+            class="btn"
+            @click="executeCode()"
+        >
           {{ buttonLabel }}
-          <q-spinner-gears/>
-        </template>
-      </q-btn>
+          <template v-slot:loading>
+            {{ buttonLabel }}
+            <q-spinner-gears/>
+          </template>
+        </q-btn>
 
+      </div>
+
+      <div
+          class="output">
+        {{ output }}
+      </div>
+
+      <div class="controls">
+        <q-btn
+            class="btn"
+            label="Final Test (on Success -> Show Scorecard Dialog)"
+            @click="runTests()"
+        />
+      </div>
+
+      <q-dialog v-model="checkReset" persistent>
+        <q-card>
+          <q-card-section class="row items-center">
+            <q-icon name="warning" class="text-red" style="font-size: 2rem;" />
+            <span class="q-ml-sm">Your code will be reseted. Are you sure?</span>
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn label="No" v-close-popup />
+            <q-btn label="Yes reset my code" color="accent" @click="loadExample()" v-close-popup />          
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+
+      <router-link to="/score">Show Scoreboard</router-link>
     </div>
-
-    <div
-        class="output">
-      {{ output }}
+    <div class="error-section">
+      <div class="error-message">
+        {{ error }}
+      </div> 
     </div>
-
-    <div class="controls">
-      <q-btn
-          class="btn"
-          label="Final Test (on Success -> Show Scorecard Dialog)"
-          @click="runTests()"
-      />
-    </div>
-
-    <q-dialog v-model="checkReset" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <q-icon name="warning" class="text-red" style="font-size: 2rem;" />
-          <span class="q-ml-sm">Your code will be reseted. Are you sure?</span>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn label="No" v-close-popup />
-          <q-btn label="Yes reset my code" color="accent" @click="loadExample()" v-close-popup />          
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-
-    <router-link to="/score">Show Scoreboard</router-link>
   </div>
 </template>
 
@@ -111,6 +118,7 @@ export default {
     return {
       numberAsInput: '3',
       output: 'No Output yet',
+      error: 'The size smaller 700px is not usable and therefore supported.',
       // uses port 80 as default. if this wont work use: http://localhost:3000/submissions/ and
       // make sure to update docker-compose.yml to  ports: - "3000:3000"
       url: "http://localhost/submissions/?wait=true",
@@ -227,7 +235,8 @@ export default {
   margin: auto;
   padding: 30px;
   height: 100vh;
-  width: 50%;
+  width: 100%;
+  max-width: 1000px;
 
   .output {
     color: #ffffff;
@@ -289,4 +298,28 @@ export default {
     max-height: 400px;
   }
 }
+
+.error-section {
+  display: none;
+}
+
+@media only screen and (max-width: 700px) {
+    /* for tablets and smaller: */
+    .code-challenge {
+      display: none;
+    }
+    .error-section {
+      display: block;
+      padding: 80px;
+      .error-message {
+        color: #ffffff;
+        background-color: #09141c;
+        font-family: monospace;
+        font-weight: bold;
+        padding: 16px;
+        font-size: 16px;     
+      }
+    }
+}
+
 </style>

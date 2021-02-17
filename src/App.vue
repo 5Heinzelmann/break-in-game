@@ -16,5 +16,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url("assets/riddle light.jpg");
+  min-height: 100vh;
 }
 </style>
