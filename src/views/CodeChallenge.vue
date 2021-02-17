@@ -13,18 +13,18 @@
             @click="autoFormatCode()"
         />
 
-      <q-select
-          v-model="selectedLang"
-          :options="langOptions"
-          bg-color="white"
-          class="lang-select"
-          color="grey"
-          filled
-          label="Language"
-          square
-          @input="checkReset = true"
-      />
-    </div>
+        <q-select
+            v-model="selectedLang"
+            :options="langOptions"
+            bg-color="white"
+            class="lang-select"
+            color="grey"
+            filled
+            label="Language"
+            square
+            @input="checkReset = true"
+        />
+      </div>
 
       <codemirror ref="cmEditor" v-model="input" :options="cmOptions"/>
 
@@ -75,13 +75,13 @@
       <q-dialog v-model="checkReset" persistent>
         <q-card>
           <q-card-section class="row items-center">
-            <q-icon name="warning" class="text-red" style="font-size: 2rem;" />
+            <q-icon name="warning" class="text-red" style="font-size: 2rem;"/>
             <span class="q-ml-sm">Your code will be reseted. Are you sure?</span>
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn label="No" v-close-popup />
-            <q-btn label="Yes reset my code" color="accent" @click="loadExample()" v-close-popup />
+            <q-btn label="No" v-close-popup/>
+            <q-btn label="Yes reset my code" color="accent" @click="loadExample()" v-close-popup/>
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -338,22 +338,23 @@ export default {
 }
 
 @media only screen and (max-width: 700px) {
-    /* for tablets and smaller: */
-    .code-challenge {
-      display: none;
+  /* for tablets and smaller: */
+  .code-challenge {
+    display: none;
+  }
+  .error-section {
+    display: block;
+    padding: 80px;
+
+    .error-message {
+      color: #ffffff;
+      background-color: #09141c;
+      font-family: monospace;
+      font-weight: bold;
+      padding: 16px;
+      font-size: 16px;
     }
-    .error-section {
-      display: block;
-      padding: 80px;
-      .error-message {
-        color: #ffffff;
-        background-color: #09141c;
-        font-family: monospace;
-        font-weight: bold;
-        padding: 16px;
-        font-size: 16px;
-      }
-    }
+  }
 }
 
 </style>
