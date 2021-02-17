@@ -3,18 +3,18 @@ import java.io.*;
 
 class Factorial {
 
-    public static int FirstFactorial(int num) {
-        int factorial = num;
-        for (int i = 1; i < num; i++) {
-            //System.out.println("fac " + factorial);
-            //System.out.println("num " + (num - i));
-            factorial = factorial * (num - i);
+    public static int firstFactorial(int number) {
+        int factorial = number;
+        for (int i = 1; i < number; i++) {
+            System.out.println("factorial: " + factorial);
+            System.out.println("number: " + (number - i));
+            factorial = factorial * (number - i);
         }
         return factorial;
     }
 
-    public static int SolutionFirstFactorialRecursiv(int num) {
-        return (num == 1 ? 1 : num * FirstFactorial(num - 1));
+    public static int calculateFactorial(int number) { 
+        return (number == 1 ? 1 : number * calculateFactorial(number - 1));
     }
 
     public static void main(String[] args) {
