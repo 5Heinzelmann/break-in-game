@@ -33,28 +33,3 @@ class Factorial {
                 + elapsedTime / 1000000);
     }
 }
-
-//CODERBYTE CODE
-
-//import java.util.*;
-//import java.io.*;
-//
-//class Main {
-//
-//    public static int FirstFactorial(int num) {
-//        // code goes here
-//        int factorial = num;
-//        for (int i = 1; i < num; i++) {
-//            //System.out.println("fac " + factorial);
-//            //System.out.println("num " + (num - i));
-//            factorial = factorial * (num-i);
-//        }
-//        return factorial;
-//    }
-//
-//    public static void main (String[] args) {
-//        // keep this function call here
-//        Scanner s = new Scanner(System.in);
-//        System.out.print(FirstFactorial(s.nextLine()));
-//    }
-//}
