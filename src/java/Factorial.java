@@ -3,7 +3,7 @@ import java.io.*;
 
 class Factorial {
 
-    public static int firstFactorial(int number) {
+    public static int calculateFactorial(int number) {
         int factorial = number;
         for (int i = 1; i < number; i++) {
             System.out.println("factorial: " + factorial);
@@ -13,7 +13,7 @@ class Factorial {
         return factorial;
     }
 
-    public static int calculateFactorial(int number) { 
+    public static int calculateFactorial(int number) {
         return (number == 1 ? 1 : number * calculateFactorial(number - 1));
     }
 
