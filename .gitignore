@@ -2,6 +2,7 @@
 node_modules
 /dist
 judge0/srv/*
+*.aof
 
 # local env files
 .env.local
