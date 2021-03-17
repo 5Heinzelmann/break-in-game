@@ -12,7 +12,7 @@
   "challenges": [
     {
       "id": 1,
-      "task": "You have to code the function CalculateFactorial(number), which calculates a factorial with the number as input. \n The function should work for all positiv integers. \n Example: if number = 3, then your program should return 6 (3 * 2 * 1).",
+      "task": "You have to code the function CalculateFactorial(inputNumber), which calculates a factorial with the inputNumber as input. \n The function should work for all positiv integers. \n Example: if inputNumber = 3, then your program should return 6 (3 * 2 * 1).",
       "defaultInput": 3,
       "syntaxHighlight": {
         "java": "text/x-java",
@@ -20,8 +20,8 @@
       },
       "initialCode":
         {
-          "java": "public static int calculateFactorial(int number) { \n int factorial = number;\n // code goes here \nreturn factorial;\n}",
-          "javascript": "function calculateFactorial(number) { \n var factorial = number\n // code goes here \n return factorial\n\n}"
+          "java": "public static long calculateFactorial(long inputNumber) { \n long factorial = inputNumber;\n // code goes here \nreturn factorial;\n}",
+          "javascript": "function calculateFactorial(inputNumber) { \n var factorial = inputNumber\n // code goes here \n return factorial\n\n}"
         },
       "executionCode": {
         "java": {

@@ -1,3 +1,3 @@
-function calculateFactorial(number) {
-    return (number !== 1) ? number * calculateFactorial(number - 1) : 1;
+function calculateFactorial(inputNumber) {
+    return (inputNumber !== 1) ? inputNumber * calculateFactorial(inputNumber - 1) : 1;
 }

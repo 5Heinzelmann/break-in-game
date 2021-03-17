@@ -39,10 +39,13 @@
                     v-model="numberAsInput"
                     bg-color="white"
                     color="grey"
+                    class="inputNumber"
                     filled
-                    label="Number as input"
+                    label="inputNumber"
                     square
                     type="number"
+                    min="1"
+                    max="20"
                 />
 
                 <q-btn
@@ -100,7 +103,6 @@ import "codemirror/theme/base16-dark.css";
 import "codemirror/mode/javascript/javascript.js";
 import "codemirror/mode/clike/clike.js";
 import "codemirror-formatting/formatting.js";
-import {Notify} from 'quasar'
 
 const axios = require("axios");
 const REPLACE_WITH_INPUT = "REPLACE_WITH_INPUT";
@@ -181,6 +183,11 @@ export default {
                             if (!this.output) {
                                 this.output = resp.data.stderr ? resp.data.stderr : resp.data.compile_output
                             }
+                            if (!isNaN(this.output)) {
+                                console.log("number");
+                                // TODO
+                                // formatNumber (number); 
+                            }
                             this.resetForm();
                             resolve(this.output);
                         })
@@ -211,6 +218,26 @@ export default {
             var totalChars = this.codemirror.getTextArea().value.length;
             this.codemirror.autoFormatRange({line: 0, ch: 0}, {line: totalLines, ch: totalChars});
             this.codemirror.setSelection({line: 0, ch: 0}, {line: 0, ch: 0});
+        },
+        formatNumber () {
+            // TODO 
+            // function Trenner(number) {
+            // // Info: Die '' sind zwei Hochkommas
+            // number = '' + number;
+            // if (number.length > 3) {
+            //     var mod = number.length % 3;
+            //     var output = (mod > 0 ? (number.substring(0,mod)) : '');
+            //     for (i=0 ; i < Math.floor(number.length / 3); i++) {
+            //     if ((mod == 0) && (i == 0))
+            //         output += number.substring(mod+ 3 * i, mod + 3 * i + 3);
+            //     else
+            //         // hier wird das Trennzeichen festgelegt mit '.'
+            //         output+= '.' + number.substring(mod + 3 * i, mod + 3 * i + 3);
+            //     }
+            // return (output);
+            // }
+            // else return number;
+            // }
         },
         runTests: function () {
             this.numberAsInput = jsonChallenges.challenges[0].testInputs[0];
@@ -270,6 +297,10 @@ export default {
     height: 100vh;
     width: 100%;
     max-width: 1000px;
+
+    .inputNumber {
+        width: 20%;
+    }
 
     .output {
         color: #ffffff;
