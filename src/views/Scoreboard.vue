@@ -1,7 +1,5 @@
 <template lang="html">
   <div class="board">
-    <router-link to="/">Back to Coding Challenge</router-link>
-    <q-btn @click="showScoreForm = true">New Entry</q-btn>
     <h2>Well done!</h2>
     <q-dialog v-model="showScoreForm" persistent>
       <q-card>
@@ -37,7 +35,7 @@ export default {
   name: "ScoreBoard",
   data() {
     return {
-      showScoreForm: false,
+      showScoreForm: true,
       name: '',
       minutes: 0,
       seconds: 0,
@@ -100,5 +98,24 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+    h2{
+        color:  #00B2BB;
+        background-color: black;
+        font-weight: bold;
+        padding: 8px
+    }
+
+    .btn {
+        display: flex;
+        background-color: #a9218e;
+        font-weight: bold;
+        color: #f4f4f4;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        margin: 12px 0 14px 0;
+    }
 }
 </style>
