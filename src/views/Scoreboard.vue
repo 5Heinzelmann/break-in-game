@@ -22,6 +22,7 @@
         title="Scoreboard"
         :data="scores"
         :columns="columns"
+        dark
         row-key="id"
         :pagination.sync="pagination"
         hide-bottom
@@ -68,7 +69,7 @@ export default {
       this.scores.push({
         id: this.uuidv4(),
         name: this.name,
-        score: score
+        score: Math.round(score)
       });
       this.sortScores();
       localStorage.scores = JSON.stringify(this.scores);
