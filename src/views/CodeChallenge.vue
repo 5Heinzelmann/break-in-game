@@ -67,7 +67,7 @@
       <div class="controls">
         <q-btn
             class="btn"
-            label="Final Test (on Success -> Show Scorecard Dialog)"
+            label="Complete Challenge"
             @click="runTests()"
         />
       </div>
