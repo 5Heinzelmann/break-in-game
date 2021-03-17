@@ -15,7 +15,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("assets/riddle light.jpg");
+  background-image: url("assets/riddle_blur.jpg");
   min-height: 100vh;
 }
 </style>
