@@ -184,9 +184,7 @@ export default {
                                 this.output = resp.data.stderr ? resp.data.stderr : resp.data.compile_output
                             }
                             if (!isNaN(this.output)) {
-                                console.log("number");
-                                // TODO
-                                // formatNumber (number); 
+                                this.formatOutput();
                             }
                             this.resetForm();
                             resolve(this.output);
@@ -219,25 +217,20 @@ export default {
             this.codemirror.autoFormatRange({line: 0, ch: 0}, {line: totalLines, ch: totalChars});
             this.codemirror.setSelection({line: 0, ch: 0}, {line: 0, ch: 0});
         },
-        formatNumber () {
-            // TODO 
-            // function Trenner(number) {
-            // // Info: Die '' sind zwei Hochkommas
-            // number = '' + number;
-            // if (number.length > 3) {
-            //     var mod = number.length % 3;
-            //     var output = (mod > 0 ? (number.substring(0,mod)) : '');
-            //     for (i=0 ; i < Math.floor(number.length / 3); i++) {
-            //     if ((mod == 0) && (i == 0))
-            //         output += number.substring(mod+ 3 * i, mod + 3 * i + 3);
-            //     else
-            //         // hier wird das Trennzeichen festgelegt mit '.'
-            //         output+= '.' + number.substring(mod + 3 * i, mod + 3 * i + 3);
-            //     }
-            // return (output);
-            // }
-            // else return number;
-            // }
+        formatOutput () {
+            var numberStr = this.output.replace("\n", "");
+            if (numberStr.length > 3) {
+                var mod = numberStr.length % 3;
+                var output = (mod > 0 ? (numberStr.substring(0,mod)) : '');
+                for (var i=0 ; i < Math.floor(numberStr.length / 3); i++) {
+                    if ((mod == 0) && (i == 0))
+                        output += numberStr.substring(mod + 3 * i, mod + 3 * i + 3);
+                    else
+                        // hier wird das Trennzeichen festgelegt mit '.'
+                        output += '.' + numberStr.substring(mod + 3 * i, mod + 3 * i + 3);
+                }
+                this.output = output;
+            }            
         },
         runTests: function () {
             this.numberAsInput = jsonChallenges.challenges[0].testInputs[0];
