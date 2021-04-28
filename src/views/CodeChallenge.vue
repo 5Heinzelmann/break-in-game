@@ -230,20 +230,20 @@ export default {
             this.codemirror.autoFormatRange({line: 0, ch: 0}, {line: totalLines, ch: totalChars});
             this.codemirror.setSelection({line: 0, ch: 0}, {line: 0, ch: 0});
         },
-        formatOutput () {
-            var numberStr = this.output.replace("\n", "");
+        formatOutput() {
+            const numberStr = this.output.replace("\n", "");
             if (numberStr.length > 3) {
-                var mod = numberStr.length % 3;
-                var output = (mod > 0 ? (numberStr.substring(0,mod)) : '');
-                for (var i=0 ; i < Math.floor(numberStr.length / 3); i++) {
-                    if ((mod == 0) && (i == 0))
+                const mod = numberStr.length % 3;
+                let output = (mod > 0 ? (numberStr.substring(0, mod)) : '');
+                for (let i = 0; i < Math.floor(numberStr.length / 3); i++) {
+                    if ((mod === 0) && (i === 0))
                         output += numberStr.substring(mod + 3 * i, mod + 3 * i + 3);
                     else
                         // hier wird das Trennzeichen festgelegt mit '.'
                         output += '.' + numberStr.substring(mod + 3 * i, mod + 3 * i + 3);
                 }
                 this.output = output;
-            }            
+            }
         },
         runTests: function () {
             this.numberAsInput = jsonChallenges.challenges[0].testInputs[0];
@@ -251,7 +251,7 @@ export default {
             let answersAreCorrect = [];
 
             this.executeCode().then(answer => {
-                let actual = answer.toString().trim();
+                let actual = answer.toString().replace(".", "").trim();
                 if (+answer === +expectedOutput) {
                     answersAreCorrect.push({correct: true});
                 } else {
