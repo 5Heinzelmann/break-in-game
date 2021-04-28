@@ -251,8 +251,8 @@ export default {
             let answersAreCorrect = [];
 
             this.executeCode().then(answer => {
-                let actual = answer.toString().replace(".", "").trim();
-                if (+answer === +expectedOutput) {
+                let actual = answer.toString().replaceAll(".", "").trim();
+                if (+actual === +expectedOutput) {
                     answersAreCorrect.push({correct: true});
                 } else {
                     answersAreCorrect.push({correct: false, input: this.numberAsInput, expectedOutput});
@@ -262,8 +262,8 @@ export default {
                 expectedOutput = jsonChallenges.challenges[0].expectedOutputs[1];
 
                 this.executeCode().then(answer => {
-                    actual = answer.toString().trim();
-                    if (+answer === +expectedOutput) {
+                    actual = answer.toString().replaceAll(".", "").trim();
+                    if (+actual === +expectedOutput) {
                         answersAreCorrect.push({correct: true});
                     } else {
                         answersAreCorrect.push({correct: false, input: this.numberAsInput, expectedOutput});
@@ -274,8 +274,8 @@ export default {
 
                     // TODO please loop this
                     this.executeCode().then(answer => {
-                        actual = answer.toString().trim();
-                        if (+answer === +expectedOutput) {
+                        actual = answer.toString().replaceAll(".", "").trim();
+                        if (+actual === +expectedOutput) {
                             answersAreCorrect.push({correct: true});
                         } else {
                             answersAreCorrect.push({correct: false, input: this.numberAsInput, expectedOutput});
