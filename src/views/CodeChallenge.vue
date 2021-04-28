@@ -185,10 +185,14 @@ export default {
                                     this.output = resp.data.stderr;
                                 } else {
                                     this.output = resp.data.compile_output;
-                                    if(this.output.includes('error')) {
-                                        console.log('error');
-                                        // java:2:
-                                        // js:2:
+                                    const languageFileEnding = '.' + this.selectedLanguage.label.toLowerCase();
+                                    const isErrorMessage = this.output.includes(languageFileEnding);
+                                    if (isErrorMessage) {
+                                        const partWithWrongLineNumber = this.output.split(languageFileEnding)[1];
+                                        const wrongLineNumber = +partWithWrongLineNumber.split(":")[1];
+                                        const countLineBreaks = (prefix.match(/\n/g) || []).length;
+                                        const correctedLineNumber = +wrongLineNumber - countLineBreaks;
+                                        this.output = this.output.replace(`:${wrongLineNumber}:`, `:${correctedLineNumber}:`)
                                     }
                                 }
                             }
