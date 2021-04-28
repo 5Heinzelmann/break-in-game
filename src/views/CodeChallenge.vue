@@ -14,7 +14,7 @@
                 />
 
                 <q-select
-                    v-model="selectedLang"
+                    v-model="selectedLanguage"
                     :options="langOptions"
                     bg-color="white"
                     class="lang-select"
@@ -110,7 +110,7 @@ const REPLACE_WITH_INPUT = "REPLACE_WITH_INPUT";
 export default {
     name: "CodeChallenge",
     data() {
-        const langs = jsonChallenges.languages.map(lang => ({
+        const languages = jsonChallenges.languages.map(lang => ({
             label: lang.name,
             value: lang.id,
             example: lang.example
@@ -128,8 +128,8 @@ export default {
             finished: true,
             buttonLabel: "Execute",
             loadingExecute: false,
-            selectedLang: langs.length > 0 ? langs[0] : null,
-            langOptions: langs,
+            selectedLanguage: languages.length > 0 ? languages[0] : null,
+            langOptions: languages,
             cmOptions: {
                 tabSize: 4,
                 styleActiveLine: true,
@@ -146,7 +146,7 @@ export default {
     },
     computed: {
         selectedLanguageId() {
-            return this.selectedLang ? this.selectedLang.value : null;
+            return this.selectedLanguage ? this.selectedLanguage.value : null;
         },
         task() {
             const allTasks = jsonChallenges.challenges.map(item => {
@@ -167,8 +167,8 @@ export default {
                     this.buttonLabel = "Wait...";
                     this.loadingExecute = true;
 
-                    const prefix = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()].prefix;
-                    const postfix = jsonChallenges.challenges[0].executionCode[this.selectedLang.label.toLowerCase()].postfix;
+                    const prefix = jsonChallenges.challenges[0].executionCode[this.selectedLanguage.label.toLowerCase()].prefix;
+                    const postfix = jsonChallenges.challenges[0].executionCode[this.selectedLanguage.label.toLowerCase()].postfix;
                     let executionCode = prefix + this.input + postfix;
                     executionCode = executionCode.replace(REPLACE_WITH_INPUT, this.numberAsInput);
 
@@ -181,7 +181,20 @@ export default {
                         .then(resp => {
                             this.output = resp.data.stdout
                             if (!this.output) {
-                                this.output = resp.data.stderr ? resp.data.stderr : resp.data.compile_output
+                                if (resp.data.stderr) {
+                                    this.output = resp.data.stderr;
+                                } else {
+                                    this.output = resp.data.compile_output;
+                                    const languageFileEnding = '.' + this.selectedLanguage.label.toLowerCase();
+                                    const isErrorMessage = this.output.includes(languageFileEnding);
+                                    if (isErrorMessage) {
+                                        const partWithWrongLineNumber = this.output.split(languageFileEnding)[1];
+                                        const wrongLineNumber = +partWithWrongLineNumber.split(":")[1];
+                                        const countLineBreaks = (prefix.match(/\n/g) || []).length;
+                                        const correctedLineNumber = +wrongLineNumber - countLineBreaks;
+                                        this.output = this.output.replace(`:${wrongLineNumber}:`, `:${correctedLineNumber}:`)
+                                    }
+                                }
                             }
                             if (!isNaN(this.output)) {
                                 this.formatOutput();
@@ -204,7 +217,7 @@ export default {
             this.loadingExecute = false;
         },
         loadExample() {
-            const selectedLang = this.selectedLang.label.toLowerCase();
+            const selectedLang = this.selectedLanguage.label.toLowerCase();
             this.input = jsonChallenges.challenges[0].initialCode[selectedLang];
             this.cmOptions.mode = jsonChallenges.challenges[0].syntaxHighlight[selectedLang];
             setTimeout(() => {
