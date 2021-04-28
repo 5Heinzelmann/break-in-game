@@ -1,5 +1,10 @@
 # Break-in-game Local Start
 
+## 0. Quick start
+```
+sh run.sh
+```
+
 ## I. Project setup
 ```
 npm install
