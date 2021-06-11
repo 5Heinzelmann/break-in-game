@@ -159,7 +159,7 @@ export default {
   },
   computed: {
     selectedLanguageId() {
-      return this.selectedLang ? this.selectedLang.value : null;
+      return this.selectedLanguage ? this.selectedLanguage.value : null;
     },
     task() {
       const allTasks = jsonChallenges.challenges.map(item => {
